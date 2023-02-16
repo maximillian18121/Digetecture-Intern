@@ -4,6 +4,7 @@ export const ActionsContext = createContext(
     {
         scan: null,
         write: null,
+        toggle:false,
         setActions:()=>{}
     }
 );

@@ -6,7 +6,6 @@ const Scan = () => {
     const [message, setMessage] = useState('');
     const [serialNumber, setSerialNumber] = useState('');
     const { actions, setActions} = useContext(ActionsContext);
-
     const scan = useCallback(async() => {
 
         if ('NDEFReader' in window) { 
@@ -37,7 +36,12 @@ const Scan = () => {
     const onReading = ({message, serialNumber}) => {
         setSerialNumber(serialNumber);
         for (const record of message.records) {
-            switch (record.recordType) {
+
+            if(record.recordType == "text"){
+                const textDecoder = new TextDecoder(record.encoding);
+                    setMessage(textDecoder.decode(record.data));
+            }
+           /* switch (record.recordType) {
                 case "text":
                     const textDecoder = new TextDecoder(record.encoding);
                     setMessage(textDecoder.decode(record.data));
@@ -47,10 +51,12 @@ const Scan = () => {
                     break;
                 default:
                     // TODO: Handle other records with record data.
-                }
+                }*/
         }
     };
-
+    const redirect = () =>{
+        window.location.href = "/"+message;
+    }
     useEffect(() => {
         scan();
     }, [scan]);
@@ -58,13 +64,16 @@ const Scan = () => {
     return(
         <>
             {actions.scan === 'scanned' ?  
-            <div>
-                <p>Serial Number: {serialNumber}</p>
-                <p>Message: {message}</p>
-            </div>
+               redirect() 
             : <Scanner status={actions.scan}></Scanner> }
         </>
     );
 };
 
 export default Scan;
+
+/*<div>
+                <p>Serial Number: {serialNumber}</p>
+                <p>Message: {message}</p>
+            </div>*/
+         //   window.location.assign(`/${message}`)

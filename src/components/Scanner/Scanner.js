@@ -10,9 +10,14 @@ const Scanner = () => {
         <p className="scanner-exit" onClick={()=>setActions({...actions, scan: null})}>X</p>
         <div className="scanner-container">
           <img src={Spinner} alt="spinning log" className="scanner-image"/>
+          <div className = "scanner-content">
           <p className="scanner-text">
             Scanning...
           </p>
+          <p className = "sacnner-message">
+           !! Hold your phone near the object to scan !! 
+          </p>
+          </div>
         </div>
       </div>
     );

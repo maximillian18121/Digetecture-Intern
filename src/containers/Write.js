@@ -1,7 +1,8 @@
 import React from 'react';
 import Writer from '../components/Writer/Writer';
 
-const Write = () => {
+const Write = ({toggle,actions,setActions}) => {
+
     const onWrite = async(message) => {
         try {
             const ndef = new window.NDEFReader();
@@ -13,9 +14,10 @@ const Write = () => {
             console.log(error);
         }
     }
+   
 
     return (
-      <Writer writeFn={onWrite}/>
+      <Writer writeFn={onWrite} toggle = {toggle} setActions = {setActions}/>
     );
 };
 
